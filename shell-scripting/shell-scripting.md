@@ -40,6 +40,7 @@ To further understand why we need them, we will craft a simple command to help u
     Apr 13 16:09:01 wild-wolf CRON[79427]: pam_unix(cron:session): session closed for user root
     Apr 13 16:15:01 wild-wolf CRON[79776]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
     Apr 13 16:15:01 wild-wolf CRON[79776]: pam_unix(cron:session): session closed for user root
+```
     
 
 As we can see,  we get alot of info that's mostly not relevant for us, so we can add in an additional filter to filer for keywords
@@ -52,7 +53,7 @@ Since we are mostly interested in commands that ran a s sudo and the commandas t
 
     ```bash
         $ cat /var/log/auth.log.1 /var/log/auth.log | grep -e 'auth\|authentication\|root\|Failed password' | grep "sudo" | grep -i "COMMAND"
-
+    ```
 Our command takes as input the 2 log files and concats them then applies the filters.
 
 As we can see, it's already alot. The command is long. Imagine having to type that every single day.
@@ -84,7 +85,7 @@ To run a shell script, you need to make it executable then run it. To run a shel
      $ chmod +x myscript
 
      $ ./myscript
-
+```
         
 
 
@@ -95,7 +96,7 @@ To print something to the console, create a newfile and name it however you want
 ```bash
 
     echo "Hello world"
-
+``` 
 save the file and [run the script](#running-shell-scripts)
 
 On running you should see 
@@ -106,7 +107,7 @@ On running you should see
           Hello world
         $
 
-    
+    ```
     
 
 ### Input 
