@@ -62,12 +62,12 @@ That's where shell scripts come in. To solve for all this.
 
 But for us to understand shell scripts, we must learn its structure and basic building blocks. Thus we will cover
 
-- Output
-- Input 
-- Variables
-- shell arguments
+- [Output](#output)
+- [Input](#input) 
+- [Variables](#variables)
+- [shell arguments](#shell-arguments)
 - Control statements
-    - loops
+    - [loops](#loops)
     - if statements
     - if-else statements
     - if-elif-else statements
@@ -133,3 +133,151 @@ exit 0
 
 In bash, you can declare and initialize variables. The  most common way is to declare and initialize then use it later.
 To declare variables we just put a `$` before the variable name. eg `$MY_VAR`. Its common convention to declare variable using upper case
+Below is an example of how variables work
+
+```bash
+# shellscr.sh
+#! /usr/bin/env bash
+   
+   NAME
+   
+   echo "whats your name?"
+   read NAME #reads from terminal and set name to input
+   
+   echo "What's your pet's name?"
+   read PET_NAME #creates and initializes PET_NAME to users input
+   
+   echo "$NAME, where's your pet $PET_NAME ?"
+   
+   exit 0
+
+```
+### Shell arguments
+
+For your programs to be able to read input from command line arguments, you need to read the shell arguments by using a special character combination that expands to the actual argements given when the script was run.
+
+we can go over these special characters
+
+```bash
+$# #this contains the number of arguments passed to the script [./script *arg1* *arg2*]
+$@ #This holds the actual arguments passed
+$0 #This translates to the name of the script
+$1 #this translates to the first argument passed to the script
+
+```
+
+Below is an example of how we can make use of shell arguments
+
+```bash
+
+    #! /bin/bash
+  
+   
+   if [[ $# < 1 ]] ; then
+           echo 'Please tell me what to do/say\n USAGE: COMMAND [OPTIONS]'
+           exit 1;
+   fi
+   
+   if [[ $1 == "Strongest avenger" ]] ; then
+           echo "Tonny Stark"
+   else
+          echo "Thanos Cooked Multiple MCU Characters :( "
+   fi
+  
+  exit 0;
+
+
+  #Running the script 
+
+  #$ ./tellme.sh strongest avenger
+  #Tonny stark
+  #$
+
+```
+
+### Control structures
+
+To effeciently use our scripts, we need to define some order of operation and add repetitions and some decision making.
+This is made availible through 
+
+- ##### loops
+    - [for loops](#Forloops)
+    - [while loops](#while-loops)
+    - [until loops](#until-loops)
+
+- ##### conditional statements
+    - if
+    - if-else
+    - if-elif-else
+    - case
+
+
+#### Loops
+
+Loops enable us to repeat a block of statements until a particular condition is satisfied
+
+##### For loops
+
+In bash, the for loop can be written in two forms  
+` for name [ [in words ...] ; ] do commands; done `
+
+The other for is similar to the c style for `for loops`
+
+`for (( expr1 ; expr2 ; expr3 )) [;] do commands ; done`
+
+Example program 
+
+```bash
+
+   #! usr/bin/env bash 
+   
+   for name in bob alice spike
+   do
+           echo "Enter a number: "
+           read $name
+   done
+
+#------------------------------------
+   #! usr/bin/env bash 
+   
+   for i in 1 2 3
+   do
+           echo "Enter a number: "
+           read number_$i
+   done
+
+#-----------------------------------
+# second form 
+
+ #! /usr/bin/env bash
+   
+   for (( i=1 ; i < 10 ; i++ ))
+   do
+           echo "$i"
+   done
+                                                                                                                                                     
+          
+```
+
+##### While loops
+
+While loops run until the the a condition becomes false, or has an exit status not 0
+
+syntax
+
+`while test-commands; do consequent-commands; done`
+
+example usage 
+
+```bash
+ #! /usr/bin/env bash
+   
+   
+   while [[ $i -lte 15]] do
+           echo "$i"
+   done 
+
+```
+
+##### Until loops
+
