@@ -281,3 +281,30 @@ example usage
 
 ##### Until loops
 
+In bash we have another loop known as the until loop, this loops runs *until* a test-command returns a non-zero value.
+It runs as long as the test command has an exit status of 0
+
+syntax
+
+`while test-commands; do consequent-commands; done`
+
+Example usage: The loop will terminate once it recieves skynet as input
+
+```bash
+
+  #! usr/bin/env bash
+   
+   echo "We are doing intil looop, it'll terminate once you type skynet"
+   
+   str=""
+   
+   until [[ "$str" == "skynet" ]] ; do
+           echo "Enter easter egg"
+           read str
+   done
+  
+  echo -e "You saved the world, skynet is taken down!\n*\t Terminator!!!\t*\n"
+
+
+
+```
