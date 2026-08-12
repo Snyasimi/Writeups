@@ -45,3 +45,8 @@ It is made up of
 
 - __Ceph MSD (MetaData Servers)__
 	Ceph metadata servers store metadata on behalf of the ceph File System. It allows users to execute POSIX file system users to execute commands such as (ls, find) without overburdenning the cephFS
+
+
+### Ceph architecture
+
+
