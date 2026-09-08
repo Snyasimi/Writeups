@@ -1,5 +1,23 @@
 #Cloud computing
 
+##Cloud deployment models
+* Public cloud
+	These are services hosted on hardware resourcesat the CSPs location
+* Private cloud
+	These are hosted on hardware resources used exclusively by a single organization 
+* Hybrid cloud 
+	This is a mix of both public and private cloud components, or a combination of some cloud and some traditional on-prem services, where these components and services interact with each other in a direct an seamless manner.
+* Multi-cloud model 
+	This involves using cloud services from multiple vendors at the same time
+* Community cloud
+	This is accessible to multiple organizations with similar concerns, but not to the general public
+
+##Cloud service models
+These include 
+	- PaaS
+	- SaaS
+	- IaaS
+
 
 ##Troubleshooting cloud issues
 The following are steps in the compTIA troubleshooting methodolgy 
