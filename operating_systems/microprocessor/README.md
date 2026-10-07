@@ -91,3 +91,62 @@ The downside is, it doesn't consider the priority of the various interrupts or t
 1. The other option is to define priorities for interrupts to allow low-priority interrupts to be interrrupted by higher priority interupt handlers
 
 ## Memory Hierarchy
+
+Memory is a crucial resource, and should be utilized well. Memory comes with three constraints. How fast? how much? and how expensive?  
+
+There are some conditions you have to consider when designing memory, these include;
+- Faster access time, greater cost per bit.
+- Greater capacity, smaller cost per bit.
+- Greater capacity, slower access speed.
+
+To take advantage of all 3 pros, designers have come up with a *memory hierarcy*. In this hierarchy, memory is organised in such a way that the smaller, faster and expesive memory is supplemented by larger cheaper memory. As you go down the hierarcy you find that you are decreasing the cost per bit, increasing the capacity and decreasing frequency of access to the memory by the processor.
+
+#### Terms to remember
+
+- Hit ratio: The rate of success of memory requests that have been serviced by the smaller, faster memory layer. e.g the cache without needing lookup from slower memory.
+
+- Locality of reference: The principle of locality, if particular information is fetched from a certain memory region, there's a possibility that that whole *'cluster'* might be used again by the processor. locality if reference uses the same concept.
+
+- Memory cycle time: The time it takes to write/read one word to/from memory.
+### Cache Memory
+
+Funny enough, this memory is invidisible to the OS and interacts with memory management hardware.
+
+The processor executes instructions as fast as the memory cycle time allows it, this means the processor can be fast but the memory cannot keep up; processor speeds increase rapidly than memory access speeds. Why can't we build memory that matches the processor's registers? well it's expensive. A better solution is to use the principle of locality and provide small, fast memory between the processor and the main memory, the *cache*.
+
+You can have multiple levels of the cache ie L1, L2, L3 caches. 
+
+Main memory consists of fixed size blocks containing K words each. When the processor attempts to read a byte or word from memory, the cache is checked first, if it contains the word, the word is passed to the processor. If not, a block of main memory consisting of a fixed number of bytes is read from main memory and placed in the cache, then the word is passed to the processor.
+
+A cache consists of slots or lines of k words each, the number of slots is less than the number of main memory blocks. If a word is not found in the cache and read from the a main memory block, the entire block is moved to one of the slots in the cache. Since these slots are shared, each slot contains a tag that identifies which block is currently being stored.
+
+> The tag is usually some number of higher-order bits of the address and refers to all
+> addresses that begin with that sequence of bits. eg 2-bit flag(01) 0f 6 bits: 011011, 010110, 011010,010111. 
+
+**Block size** is the unit of data exchanged between the cache and main memory. As the block size increases, so does the hit ratio, due to the principle of locality. A *mapping function* determines which location a block will occupy, a *replacement algorithm* chooses which block to replace. A block that is least lickely to be used in the near future is the preferred candidate. But since predicting that is quite difficult, a policy known as *least-recently-used(LRU) algorithm* is used. The strategy is to replace blocks that have been in the cache the longest and have not been referenced.
+
+If contents in a block are altered, these changes need to be written to main memory before replacing it. The *write policy* dictates when the memory write operation takes place, it can be either;
+
+- Writes occur when the block is altered.
+- Writes occur when the block is replaced.
+
+One reduces memory write operations, the other one leaves data in main memory at an obsolete state.
+
+### Direct Memory Access (DMA)
+
+Before, there were various ways the processor to perform I/O operations.
+1. Programmed I/O in this mode, the I/O module performs the requested action and sets appropriate bits once done, it does not interruot the processor, rather , the processor needs to keep checking the status of the operation, this degrades the perfomance of the system.
+1. Interrupt driven I/O: In this mode, the processor issued the I/O command and goes to do something else, the I/O module will interrupt the processor once it's ready to exchange data. The processor executed the data transfer, then resumes processing. This is better than programmed I/O, the only issue is, it interrupts the processor.
+
+DMA solves the short coming. A DMA module can be a separate module on the system or the I/O module's. When the processor needs to read/write a block of data, it delegates to the module and giving it information it needs to handle the operation.
+Tis information include;
+
+- Whether it's a read or write.
+- Addr of the I/O module involved.
+- Starting memory location to read data from or write data to.
+- THe number of words to be read or written
+
+The DMA module transfers an entire block, word by word, once it's done, it interrupts the processor(only involved at the begining and end). 
+
+The DMA module makes use of the system bus to transfer data, this means the processor can and will sometimes wait the module to complete it's operations, this is better than handling interrupts. It slows down the processor.
+
